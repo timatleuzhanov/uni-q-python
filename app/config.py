@@ -7,6 +7,11 @@ PORT = int(os.getenv("PORT", "5174"))
 WEB_ORIGIN = os.getenv("WEB_ORIGIN", "http://localhost:5173")
 SESSION_SECRET = os.getenv("SESSION_SECRET", "dev-secret-change-me")
 NODE_ENV = os.getenv("NODE_ENV", "development")
+SESSION_HTTPS_ONLY = os.getenv("SESSION_HTTPS_ONLY", "").strip().lower() in {
+    "1",
+    "true",
+    "yes",
+} or WEB_ORIGIN.startswith("https://")
 
 
 def resolve_sqlite_path() -> Path:

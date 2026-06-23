@@ -22,6 +22,7 @@ from .config import (
     FLAPPY_DIR,
     NODE_ENV,
     PUBLIC_DIR,
+    SESSION_HTTPS_ONLY,
     SESSION_SECRET,
     SQLITE_PATH,
     UNIQ_NVIDIA_API_BASE,
@@ -73,7 +74,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET, same_site="lax", https_only=NODE_ENV == "production")
+app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET, same_site="lax", https_only=SESSION_HTTPS_ONLY)
 
 
 async def broadcast_queue() -> None:
