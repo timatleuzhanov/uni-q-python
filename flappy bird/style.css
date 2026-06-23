@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#gameWrapper {
+  position: relative;
+  width: 400px;
+  height: 650px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0, 120, 200, 0.4), 0 0 120px rgba(0, 80, 160, 0.2);
+  border: 2px solid rgba(0, 150, 255, 0.3);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+canvas, .btn, .ctrl-btn, .btn-outline, #homeBtn, button {
+  touch-action: manipulation;
+  user-select: none;
+}
+
+#ui {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+}
+
+#score {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 22px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8), 2px 2px 0 #0044aa;
+  letter-spacing: 2px;
+  display: none;
+}
+
+#queueStatus {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+  display: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#startScreen, #gameOverScreen {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  background: rgba(5, 10, 30, 0.85);
+}
+
+#startScreen {
+  backdrop-filter: blur(4px);
+}
+
+#gameOverScreen { display: none; z-index: 1000; pointer-events: all; }
+
+.logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 28px;
+  color: #00aaff;
+  text-shadow: 0 0 20px #0066ff, 2px 2px 0 #003399;
+  margin-bottom: 4px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { text-shadow: 0 0 20px #0066ff, 2px 2px 0 #003399; }
+  50% { text-shadow: 0 0 40px #00aaff, 0 0 60px #0055ff, 2px 2px 0 #003399; }
+}
+
+.subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.character-preview {
+  font-size: 60px;
+  margin-bottom: 16px;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.game-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  color: #ffdd00;
+  text-shadow: 2px 2px 0 #aa7700;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.game-tagline {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 32px;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.btn {
+  background: linear-gradient(135deg, #0055cc, #0088ff);
+  border: 2px solid #00aaff;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  padding: 18px 48px;
+  border-radius: 50px;
+  cursor: pointer;
+  pointer-events: all;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 20px rgba(0, 120, 255, 0.5), 0 0 0 0 rgba(0,170,255,0.4);
+  transition: all 0.15s;
+  animation: btnPulse 2s ease-in-out infinite;
+  margin-bottom: 14px;
+}
+
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(0, 120, 255, 0.5), 0 0 0 0 rgba(0,170,255,0.4); }
+  50% { box-shadow: 0 6px 45px rgba(0, 160, 255, 1), 0 0 0 14px rgba(0,170,255,0); }
+}
+
+.btn:active { transform: scale(0.96); }
+
+.hint {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  line-height: 1.8;
+}
+
+#goTitle {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  color: #ff4444;
+  text-shadow: 2px 2px 0 #880000;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+#goMessage {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 260px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+#goScore {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+#goBestScore {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #ffdd00;
+  margin-bottom: 28px;
+}
+
+#goScore span, #goBestScore span {
+  color: #fff;
+  font-size: 18px;
+}
+
+.divider {
+  width: 200px;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 10px 0 20px;
+}
+
+.badge {
+  background: rgba(0, 100, 200, 0.3);
+  border: 1px solid rgba(0, 150, 255, 0.4);
+  border-radius: 30px;
+  padding: 5px 14px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+#medal {
+  font-size: 36px;
+  margin-bottom: 6px;
+}
+
+#homeBtn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.55);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.15s;
+}
+#homeBtn:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+#homeBtn:active { transform: scale(0.95); }
+
+/* === COIN DISPLAY (in-game top-left) === */
+#coinDisplay {
+  position: absolute;
+  top: 20px;
+  left: 14px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #ffcc00;
+  text-shadow: 1px 1px 0 #7a5c00;
+  display: none;
+  pointer-events: none;
+}
+
+/* === START SCREEN COIN BALANCE === */
+#startCoinBalance {
+  margin-top: 18px;
+  font-size: 11px;
+  color: rgba(255, 200, 0, 0.75);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+#startCoinBalance span {
+  color: #ffcc00;
+}
+
+/* === GAME OVER COIN INFO === */
+#goCoins {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #ffcc00;
+  margin-bottom: 2px;
+}
+#goTotalCoins {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: rgba(255, 200, 0, 0.6);
+  margin-bottom: 18px;
+}
+
+/* === CONTINUE BUTTON === */
+.btn-coin {
+  background: linear-gradient(135deg, #7a5c00, #ccaa00);
+  border-color: #ffcc00;
+  font-size: 11px;
+  padding: 12px 24px;
+  animation: none;
+  box-shadow: 0 4px 16px rgba(200, 160, 0, 0.5);
+  margin-bottom: 10px;
+}
+.btn-coin:hover { background: linear-gradient(135deg, #a07a00, #ffdd00); }
+.btn-coin--disabled {
+  background: rgba(60, 60, 60, 0.6) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.35) !important;
+  box-shadow: none !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* === TOP CONTROLS (mute + pause) === */
+#topControls {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: none;
+  flex-direction: row;
+  gap: 8px;
+  pointer-events: all;
+}
+
+.ctrl-btn {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.75);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  pointer-events: all;
+}
+.ctrl-btn:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+.ctrl-btn:active { transform: scale(0.9); }
+
+/* === PAUSE SCREEN === */
+#pauseScreen {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  background: rgba(0,5,20,0.82);
+  backdrop-filter: blur(5px);
+}
+
+.pause-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 28px;
+  color: #00aaff;
+  text-shadow: 0 0 20px #0066ff, 2px 2px 0 #003399;
+  margin-bottom: 40px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.55);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.15s;
+  margin-bottom: 14px;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
+.btn-outline:active { transform: scale(0.96); }
+
+@media (max-height: 680px) {
+  #gameWrapper { width: 360px; height: 580px; }
+  .logo { font-size: 22px; }
+}
+@media (max-width: 420px) {
+  #gameWrapper { width: 100vw; height: 100vh; border-radius: 0; }
+}

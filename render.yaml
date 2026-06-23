@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: uni-q-2
+    env: docker
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: WEB_ORIGIN
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: SQLITE_PATH
+        value: /var/data/uni-q.sqlite
+    disk:
+      name: uni-q-data
+      mountPath: /var/data
+      sizeGB: 1
